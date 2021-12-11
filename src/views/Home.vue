@@ -1,13 +1,9 @@
 <template>
-    <NavBar />
+  <h1>Olá</h1>
 </template>
 <script>
-import NavBar from '../components/NavBar.vue'
 export default {
-    name: 'HomeView',
-    components: {
-        NavBar,
-    },
+  name: 'HomeView',
 }
 </script>
 <style></style>
