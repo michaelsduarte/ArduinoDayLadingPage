@@ -1,136 +1,71 @@
-<!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-  <Disclosure v-slot="{ open }" as="nav" class="bg-primary">
-    <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-      <div class="relative flex items-center justify-between h-16">
-        <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-          <!-- Mobile menu button-->
-          <DisclosureButton class="mobile-menu">
-            <span class="sr-only">Open main menu</span>
-            <MenuIcon v-if="!open" class="block h-6 w-6" aria-hidden="true" />
-            <XIcon v-else class="block h-6 w-6" aria-hidden="true" />
-          </DisclosureButton>
-        </div>
-        <div
-          class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start"
+  <nav
+    class="relative flex flex-wrap items-center justify-between py-3 navbar-expand-lg bg-primary mb-3"
+  >
+    <div
+      class="container px-4 mx-auto flex flex-wrap items-center justify-between"
+    >
+      <div
+        class="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start"
+      >
+        <router-link
+          class="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase text-white"
+          to="/"
         >
-          <div class="flex-shrink-0 flex items-center">
-            <img
-              class="block lg:hidden h-8 w-auto"
-              src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-              alt="Workflow"
-            />
-            <img
-              class="hidden lg:block h-8 w-auto"
-              src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
-              alt="Workflow"
-            />
-          </div>
-          <div class="hidden sm:block sm:ml-6">
-            <div class="flex space-x-4">
-              <router-link
-                v-for="item in navigation"
-                :key="item.id"
-                :to="item.href"
-                :class="[
-                  item.current
-                    ? 'bg-gray-900 text-white'
-                    : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                  'px-3 py-2 rounded-md text-sm font-medium',
-                ]"
-                :aria-current="item.current ? 'page' : undefined"
-              >
-                {{ item.name }}
-              </router-link>
-            </div>
-          </div>
-        </div>
-        <div
-          class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
+          ArduinoDay22
+        </router-link>
+        <button
+          class="cursor-pointer text-xl leading-none px-3 py-1 border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
+          type="button"
+          @click="toggleNavbar()"
         >
-          <button
-            type="button"
-            class="p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-          >
-            <span class="sr-only">View notifications</span>
-            <BellIcon class="h-6 w-6" aria-hidden="true" />
-          </button>
-        </div>
+          <MenuAlt3Icon class="h-5 w-5 text-white" />
+        </button>
+      </div>
+      <div
+        :class="{ hidden: !showMenu, flex: showMenu }"
+        class="lg:flex lg:flex-grow items-center"
+      >
+        <ul class="flex flex-col lg:flex-row list-none ml-auto">
+          <li v-for="item in navigation" :key="item.name" class="nav-item">
+            <router-link
+              class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+              :to="item.href"
+            >
+              <span class="ml-2">{{ item.name }}</span>
+            </router-link>
+          </li>
+        </ul>
       </div>
     </div>
-
-    <DisclosurePanel class="sm:hidden">
-      <div class="px-2 pt-2 pb-3 space-y-1">
-        <DisclosureButton
-          v-for="item in navigation"
-          :key="item.name"
-          as="a"
-          :href="item.href"
-          :class="[
-            item.current
-              ? 'bg-gray-900 text-white'
-              : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-            'block px-3 py-2 rounded-md text-base font-medium',
-          ]"
-          :aria-current="item.current ? 'page' : undefined"
-          >{{ item.name }}</DisclosureButton
-        >
-      </div>
-    </DisclosurePanel>
-  </Disclosure>
+  </nav>
 </template>
 
 <script>
-import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
-import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline'
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
-
-const navigationInit = [
-  { name: 'Dashboard', href: '/', current: false },
-  { name: 'Team', href: '/about', current: false },
-  { name: 'Projects', href: '#', current: false },
-  { name: 'Calendar', href: '#', current: false },
-]
+import { MenuAlt3Icon } from '@heroicons/vue/outline'
 
 export default {
   name: 'NavBar',
   components: {
-    Disclosure,
-    DisclosureButton,
-    DisclosurePanel,
-    BellIcon,
-    MenuIcon,
-    XIcon,
+    MenuAlt3Icon,
   },
-  setup() {
-    const navigation = computed(() => {
-      navigationInit.forEach((element, index) => {
-        if (element.href === useRoute().path) {
-          navigationInit[index].current = true
-        } else {
-          navigationInit[index].current = false
-        }
-      })
-      return navigationInit
-    })
+  data() {
     return {
-      navigation,
+      showMenu: false,
+      navigation: [
+        { name: 'Home', href: '/' },
+        { name: 'Sobre', href: '/sobre' },
+        { name: 'Patrocinio', href: '/patrocinio' },
+        { name: 'Eventos', href: '/eventos' },
+      ],
     }
+  },
+  methods: {
+    toggleNavbar: function () {
+      this.showMenu = !this.showMenu
+    },
   },
 }
 </script>
 
-<style>
-.mobile-menu {
-  @apply inline-flex items-center justify-center p-2 rounded-md text-gray-400;
-}
-
-.mobile-menu:hover {
-  @apply bg-gray-700 text-white;
-}
-
-.mobile-menu:focus {
-  @apply outline-none ring-2 ring-inset ring-white;
-}
-</style>
+<style></style>
