@@ -1,20 +1,20 @@
 const colors = require('tailwindcss/colors')
 
 module.exports = {
-  purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
-  darkMode: false, // or 'media' or 'class'
+  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'], // or 'media' or 'class'
   theme: {
     extend: {},
     colors: {
-      primary: '#1D3052',
-      gray: colors.blueGray,
+      primary: '#00878F',
+      secondary: '#E47128',
+      primaryLight: '#62AEB2',
+      accent: '#E5AD24',
+      gray: colors.slate,
       teal: colors.teal,
       orange: colors.orange,
       white: colors.white,
+      black: colors.black
     }
-  },
-  variants: {
-    extend: {},
   },
   plugins: [],
 }
