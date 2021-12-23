@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div id="header"></div>
+    <div id="header" />
     <NavBarVue />
     <router-view />
   </div>
@@ -15,7 +15,7 @@ export default {
 </script>
 <style>
 #app {
-  @apply font-serif antialiased text-center text-gray-800 text-xl;
+  @apply font-serif antialiased text-white;
 }
 #header {
   @apply bg-newBlack bg-animated-components absolute left-0 top-0 right-0 -z-10;
